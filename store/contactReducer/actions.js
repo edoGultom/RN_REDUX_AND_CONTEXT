@@ -28,12 +28,11 @@ export const getAllContact = () => (dispatch) => {
 
 export function createDataContact(data, callBack) {
     return async (dispatch) => {
-        dispatch({ type: SET_LOADING, payload: true });
         await axios
             .post(`${api}/contact`, data)
             .then(async response => {
-
                 if (response.data.message !== "") {
+                    dispatch({ type: SET_LOADING, payload: true });
                     await dispatch({
                         type: SET_CONTACT_SUCCESS,
                         payload: response.data.message,
@@ -55,11 +54,10 @@ export function createDataContact(data, callBack) {
 }
 export function deleteContact(id, callBack) {
     return async (dispatch) => {
-        dispatch({ type: SET_LOADING, payload: true });
         await axios.delete(`${api}/contact/` + id)
             .then(async response => {
-
                 if (response.data.message !== "") {
+                    dispatch({ type: SET_LOADING, payload: true });
                     await dispatch({
                         type: DELETE_CONTACT_SUCCESS,
                         payload: response.data.message,
@@ -81,12 +79,12 @@ export function deleteContact(id, callBack) {
 export function updateDataContact(id, data, callBack) {
 
     return async (dispatch) => {
-        dispatch({ type: SET_LOADING, payload: true });
         await axios
             .put(`${api}/contact/` + id, data)
             .then(async response => {
 
                 if (response.data.message !== "") {
+                    dispatch({ type: SET_LOADING, payload: true });
                     await dispatch({
                         type: UPDATE_CONTACT_SUCCESS,
                         payload: response.data.data,
