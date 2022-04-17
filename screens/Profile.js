@@ -11,7 +11,10 @@ const Profile = (props, { navigation }) => {
     const dispatch = useDispatch()
 
     const { id, firstName, lastName, photo, age } = props.route.params.item;
+    console.log(id)
+
     const handleDelete = () => {
+
         dispatch(deleteContact(id, status => callBackDelete(status)));
     }
     const callBackDelete = ({ status, pesan }) => {
@@ -31,7 +34,8 @@ const Profile = (props, { navigation }) => {
             <View style={{ alignItems: 'center' }}>
                 <Image
                     style={{ width: 140, height: 140, borderRadius: 140 / 2, marginTop: -50 }}
-                    source={(photo == 'N/A') ? contactEmpty : { uri: photo }}
+                    source={(photo == 'N/A') ? contactEmpty : (photo.includes("://")) ? { uri: photo } : { uri: `data:image/gif;base64,${photo}` }}
+
                 />
             </View>
 
@@ -49,7 +53,7 @@ const Profile = (props, { navigation }) => {
                     onPress={() => {
                         // const age = Number.toString(age);
                         props.navigation.navigate('Create',
-                            { id, firstName, lastName, photo, age }
+                            { id, firstName, lastName, photo, age, name: "Update Contact" }
                         )
                     }}
                 >

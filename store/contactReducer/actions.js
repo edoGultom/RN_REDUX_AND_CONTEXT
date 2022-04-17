@@ -53,29 +53,30 @@ export function createDataContact(data, callBack) {
             });
     };
 }
-export const deleteContact = (id, callBack) => (dispatch) => {
-    dispatch({ type: SET_LOADING, payload: true });
-    axios.delete(`${api}/contact/` + id)
-        .then(response => {
-            if (response.data.message !== "") {
+export function deleteContact(id, callBack) {
+    return async (dispatch) => {
+        dispatch({ type: SET_LOADING, payload: true });
+        await axios.delete(`${api}/contact/` + id)
+            .then(async response => {
 
-                dispatch({
-                    type: DELETE_CONTACT_SUCCESS,
-                    payload: response.data.message,
-                });
+                if (response.data.message !== "") {
+                    await dispatch({
+                        type: DELETE_CONTACT_SUCCESS,
+                        payload: response.data.message,
+                    });
+                    dispatch({ type: SET_LOADING, payload: false });
+                    callBack({ status: true, pesan: response.data.message });
+                } else {
+                    dispatch({ type: SET_LOADING, payload: false });
+                    callBack({ status: false, pesan: response.data.message });
+                }
+            })
+            .catch(function (error) {
+                var responseError = error.response;
                 dispatch({ type: SET_LOADING, payload: false });
-                callBack({ status: true, pesan: response.data.message });
-            } else {
-                dispatch({ type: SET_LOADING, payload: false });
-                callBack({ status: false, pesan: response.data.message });
-            }
-        })
-        .catch(function (error) {
-            var responseError = error.response;
-            dispatch({ type: SET_LOADING, payload: false });
-            callBack({ status: false, pesan: responseError.data.message });
-
-        });
+                callBack({ status: false, pesan: responseError.data.message });
+            });
+    };
 }
 export function updateDataContact(id, data, callBack) {
 

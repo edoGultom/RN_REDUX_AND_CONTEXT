@@ -59,7 +59,8 @@ function App() {
         <Stack.Screen
           name="Create"
           component={CreateContact}
-          options={{ ...myOptions, title: "New Contact" }}
+          // options={{ ...myOptions, title: "New Contact" }}
+          options={({ route }) => ({ ...myOptions, title: route.params.name })}
 
         />
 

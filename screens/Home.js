@@ -36,7 +36,11 @@ const Home = ({ navigation }) => {
         }
     }, [loading])
 
+    const isBase64 = (str) => {
+        return str.length % 4 == 0 && /^[A-Za-z0-9+/]+[=]{0,2}$/.test(str);
+    }
     const renderList = ((item) => {
+        console.log(item)
         return (
             <Card style={styles.myCard} key={item.id} onPress={() => navigation.navigate("Profile", { item })}>
                 <View style={styles.cardView}>
@@ -46,7 +50,7 @@ const Home = ({ navigation }) => {
                             height: 60,
                             borderRadius: 30
                         }}
-                        source={(item.photo == 'N/A') ? contactEmpty : { uri: item.photo }}
+                        source={(item.photo == 'N/A') ? contactEmpty : (item.photo.includes("://")) ? { uri: item.photo } : { uri: `data:image/gif;base64,${item.photo}` }}
                     />
                     <View style={{ marginLeft: 10 }}>
                         <Text style={styles.textTitle}>{item.firstName} {item.lastName}</Text>
@@ -72,7 +76,7 @@ const Home = ({ navigation }) => {
                 refreshing={loading}
             />
 
-            <FAB onPress={() => navigation.navigate("Create")}
+            <FAB onPress={() => navigation.navigate("Create", { name: "Create New Contact" })}
                 style={styles.fab}
                 small={false}
                 icon="plus"

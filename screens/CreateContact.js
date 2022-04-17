@@ -22,7 +22,7 @@ const CreateContact = ({ navigation, route }) => {
 
     // IF  UPDATE 
     const getDetails = (type) => {
-        if (route.params) {
+        if (route.params.id) {
             switch (type) {
                 case "id":
                     return route.params.id
@@ -43,10 +43,10 @@ const CreateContact = ({ navigation, route }) => {
     //CLOSE UPDATE 
 
     let dataDefault = {
-        firstName: getDetails("firstName"),
-        lastName: getDetails("lastName"),
-        photo: getDetails("photo"),
-        age: getDetails("age")
+        firstName: (getDetails("firstName") === 'undefined') ? '' : getDetails("firstName"),
+        lastName: (getDetails("lastName") === 'undefined') ? '' : getDetails("lastName"),
+        photo: (getDetails("photo") === 'undefined') ? '' : getDetails("photo"),
+        age: (getDetails("age") === 'undefined') ? 0 : getDetails("age"),
     }
     const [initialValue, setInitialValue] = useState(dataDefault)
 
@@ -79,7 +79,7 @@ const CreateContact = ({ navigation, route }) => {
                                 type: data.type,
                                 name: data.fileName
                             }
-                            setInitialValue(p => ({ ...p, photo: data.uri }))
+                            setInitialValue(p => ({ ...p, photo: data.base64 }))
                             setModal(false)
                         }
                     },
@@ -107,7 +107,7 @@ const CreateContact = ({ navigation, route }) => {
                 ImagePicker.launchImageLibrary(
                     {
                         mediaType: 'photo',
-                        includeBase64: false,
+                        includeBase64: true,
                         maxHeight: 200,
                         maxWidth: 200,
                     },
@@ -121,7 +121,7 @@ const CreateContact = ({ navigation, route }) => {
                             }
                             // console.log(data.base64)
                             // handleUpload(file);
-                            setInitialValue(p => ({ ...p, photo: data.uri }))
+                            setInitialValue(p => ({ ...p, photo: data.base64 }))
                             setModal(false)
                         }
                     },
@@ -204,7 +204,8 @@ const CreateContact = ({ navigation, route }) => {
                 <View style={styles.uploadImage}>
                     <Avatar.Image
                         size={150}
-                        source={(initialValue.photo == '') ? contactEmpty : { uri: initialValue.photo }}
+                        source={(initialValue.photo == 'N/A') ? contactEmpty : (initialValue.photo.includes("://")) ? { uri: initialValue.photo } : { uri: `data:image/gif;base64,${initialValue.photo}` }}
+
                     />
                     {isValidFile ? null :
                         <Animated.View animation="fadeInLeft" duration={500}>
@@ -268,7 +269,7 @@ const CreateContact = ({ navigation, route }) => {
                     onChangeText={(numeric) => setInitialValue(p => ({ ...p, age: numeric }))}
                 />
 
-                {route.params ?
+                {route.params.id ?
                     <Button
                         style={styles.inputStyle}
                         theme={theme}

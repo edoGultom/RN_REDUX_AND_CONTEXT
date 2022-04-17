@@ -77,9 +77,9 @@ import org.apache.tools.ant.taskdefs.condition.Os
  *   extraPackagerArgs: []
  * ]
  */
-
 project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
+  entryFile: "index.js",
+  enableHermes: true 
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
