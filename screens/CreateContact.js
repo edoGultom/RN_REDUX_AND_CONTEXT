@@ -204,7 +204,7 @@ const CreateContact = ({ navigation, route }) => {
                 <View style={styles.uploadImage}>
                     <Avatar.Image
                         size={150}
-                        source={(initialValue.photo == 'N/A') ? contactEmpty : (initialValue.photo.includes("://")) ? { uri: initialValue.photo } : { uri: `data:image/gif;base64,${initialValue.photo}` }}
+                        source={(initialValue.photo == 'N/A' || initialValue.photo === "") ? contactEmpty : (initialValue.photo.includes("://")) ? { uri: initialValue.photo } : { uri: `data:image/gif;base64,${initialValue.photo}` }}
 
                     />
                     {isValidFile ? null :

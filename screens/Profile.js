@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Alert, Image, StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { Button, Title } from 'react-native-paper';
+import { Button, Title, Modal } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { contactEmpty } from '../assets/images';
 import { deleteContact } from '../store/contactReducer/actions';
@@ -9,12 +9,21 @@ import { deleteContact } from '../store/contactReducer/actions';
 
 const Profile = (props, { navigation }) => {
     const dispatch = useDispatch()
+    const [modalHapusVisible, setModalHapusVisible] = useState(false);
 
     const { id, firstName, lastName, photo, age } = props.route.params.item;
-    console.log(id)
 
+    const showModal = () => {
+        setModalHapusVisible(true);
+    }
+    const hideModal = () => {
+        setModalHapusVisible(false);
+    }
     const handleDelete = () => {
-
+        setModalHapusVisible(true);
+    }
+    const handleProcessDelete = () => {
+        setModalHapusVisible(false);
         dispatch(deleteContact(id, status => callBackDelete(status)));
     }
     const callBackDelete = ({ status, pesan }) => {
@@ -64,10 +73,21 @@ const Profile = (props, { navigation }) => {
                     theme={theme}
                     icon="delete"
                     mode="contained"
-                    onPress={() => handleDelete()}>
+                    onPress={() => showModal()}>
                     Delete Contact
                 </Button>
             </View>
+            <Modal visible={modalHapusVisible} onDismiss={hideModal} contentContainerStyle={{ backgroundColor: 'white', padding: 20 }}>
+                <Text style={styles.modalText}>Are you sure want to delete this contact ???</Text>
+                <View style={styles.modalBtn}>
+                    <Button mode="contained" onPress={() => hideModal()}>
+                        Cancel
+                    </Button>
+                    <Button mode="contained" onPress={() => handleProcessDelete()}>
+                        Yes
+                    </Button>
+                </View>
+            </Modal>
         </View >
     );
 }
@@ -92,6 +112,16 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginTop: 3,
         marginLeft: 5
+    },
+    modalBtn: {
+        padding: 20,
+        flexDirection: 'row',
+        alignContent: 'center',
+        justifyContent: 'space-between'
+    },
+    modalText: {
+        fontSize: 20,
+        textAlign: 'center'
     }
 })
 
