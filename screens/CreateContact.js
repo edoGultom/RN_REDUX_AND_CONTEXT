@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, Animated, KeyboardAvoidingView, Modal, PermissionsAndroid, StyleSheet, Text, View } from 'react-native';
 import * as ImagePicker from "react-native-image-picker";
 import { Avatar, Button, TextInput } from 'react-native-paper';
@@ -19,6 +19,38 @@ const CreateContact = ({ navigation, route }) => {
     const [keteranganValidAge, setKeteranganValidAge] = useState('');
     const [isValidLastName, setIsValidLastName] = useState(true);
     const [isValidAge, setIsValidAge] = useState(true);
+
+    // PERMISSION CAMERA
+    useEffect(() => {
+        if (Platform.OS === 'android') {
+            requestCameraPermission();
+        }
+    }, []);
+    const requestCameraPermission = async () => {
+        const granted = await PermissionsAndroid.requestMultiple([
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        ])
+            .then(result => {
+                if (
+                    result['android.permission.READ_EXTERNAL_STORAGE'] === 'granted' &&
+                    result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'granted' &&
+                    result['android.permission.CAMERA'] === 'granted'
+                ) {
+                } else {
+                    alert(
+                        'Fungsi aplikasi mungkin tidak berjalan semestinya, ada permision yang tidak diberikan',
+                    );
+                }
+            })
+            .catch(err => {
+                alert(
+                    'Fungsi aplikasi mungkin tidak berjalan semestinya, ada permision yang tidak diberikan',
+                );
+            });
+    };
+    //   TUTUP PERMISSION CAMERA
 
     // IF  UPDATE 
     const getDetails = (type) => {

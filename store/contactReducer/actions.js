@@ -56,6 +56,7 @@ export function deleteContact(id, callBack) {
     return async (dispatch) => {
         await axios.delete(`${api}/contact/` + id)
             .then(async response => {
+                console.log(response)
                 if (response.data.message !== "") {
                     dispatch({ type: SET_LOADING, payload: true });
                     await dispatch({

@@ -185,7 +185,7 @@ android {
         def packageReactNdkDebugLibs = tasks.register("packageReactNdkDebugLibs", Copy) {
             dependsOn(":ReactAndroid:packageReactNdkDebugLibsForBuck")
             from("$reactAndroidProjectDir/src/main/jni/prebuilt/lib")
-            into("$buildDir/react-ndk/exported")
+            intandroido("$buildDir/react-ndk/exported")
         }
         def packageReactNdkReleaseLibs = tasks.register("packageReactNdkReleaseLibs", Copy) {
             dependsOn(":ReactAndroid:packageReactNdkReleaseLibsForBuck")
