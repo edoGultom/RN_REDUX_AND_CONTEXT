@@ -1,19 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    useColorScheme,
-    View,
-    Image,
-    FlatList,
-    Alert,
-    ActivityIndicator
+    FlatList, Image, StyleSheet,
+    Text, View
 } from 'react-native';
-import { Card, FAB, Title, Subheading } from 'react-native-paper';
-import { useSelector, useDispatch } from 'react-redux'
+import { Card, FAB } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 import { contactEmpty } from '../assets/images';
 import { getAllContact } from '../store/contactReducer/actions';
 
@@ -36,9 +27,7 @@ const Home = ({ navigation }) => {
         }
     }, [loading])
 
-    const isBase64 = (str) => {
-        return str.length % 4 == 0 && /^[A-Za-z0-9+/]+[=]{0,2}$/.test(str);
-    }
+
     const renderList = ((item) => {
         console.log(item)
         return (

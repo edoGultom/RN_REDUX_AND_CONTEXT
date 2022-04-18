@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, KeyboardAvoidingView, Modal, PermissionsAndroid, StyleSheet, View, Text, Animated } from 'react-native';
+import { Alert, Animated, KeyboardAvoidingView, Modal, PermissionsAndroid, StyleSheet, Text, View } from 'react-native';
 import * as ImagePicker from "react-native-image-picker";
 import { Avatar, Button, TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
@@ -148,14 +148,7 @@ const CreateContact = ({ navigation, route }) => {
             Alert.alert("Peringatan!!!", pesan)
         }
     };
-    // const handleValidFile = () => {
-    //     if (file == "" || initialValue.photo == "") {
-    //         setIsValidFile(false)
-    //         setKeteranganValidFile('Photo is not allowed to be empty')
-    //     } else {
-    //         setIsValidFile(true)
-    //     }
-    // }
+
     const handleValidFirstName = (val) => {
         if (val.length < 1) {
             setIsValidFirstName(false)

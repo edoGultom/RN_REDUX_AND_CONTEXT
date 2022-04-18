@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Image, StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { Button, Title, Modal } from 'react-native-paper';
+import { Button, Modal, Title } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { contactEmpty } from '../assets/images';
 import { deleteContact } from '../store/contactReducer/actions';
@@ -99,7 +99,6 @@ const theme = {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        // backgroundColor: 'red'
     },
     myCard: {
         margin: 3
