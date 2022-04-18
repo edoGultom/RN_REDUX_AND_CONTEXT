@@ -71,16 +71,17 @@ const CreateContact = ({ navigation, route }) => {
                         maxWidth: 200,
                     },
                     (response) => {
-                        let data = response.assets[0];
-
-                        if (data) {
-                            let file = {
-                                uri: data.uri,
-                                type: data.type,
-                                name: data.fileName
+                        if (!response.didCancel) {
+                            let data = response.assets[0];
+                            if (data) {
+                                let file = {
+                                    uri: data.uri,
+                                    type: data.type,
+                                    name: data.fileName
+                                }
+                                setInitialValue(p => ({ ...p, photo: data.base64 }))
+                                setModal(false)
                             }
-                            setInitialValue(p => ({ ...p, photo: data.base64 }))
-                            setModal(false)
                         }
                     },
                 );
@@ -112,17 +113,20 @@ const CreateContact = ({ navigation, route }) => {
                         maxWidth: 200,
                     },
                     (response) => {
-                        let data = response.assets[0];
-                        if (data) {
-                            let file = {
-                                uri: data.uri,
-                                type: data.type,
-                                name: data.fileName
+                        // console.log(response)
+                        if (!response.didCancel) {
+                            let data = response.assets[0];
+                            if (data) {
+                                let file = {
+                                    uri: data.uri,
+                                    type: data.type,
+                                    name: data.fileName
+                                }
+                                // console.log(data.base64)
+                                // handleUpload(file);
+                                setInitialValue(p => ({ ...p, photo: data.base64 }))
+                                setModal(false)
                             }
-                            // console.log(data.base64)
-                            // handleUpload(file);
-                            setInitialValue(p => ({ ...p, photo: data.base64 }))
-                            setModal(false)
                         }
                     },
                 );
