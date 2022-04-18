@@ -74,11 +74,11 @@ const CreateContact = ({ navigation, route }) => {
                         if (!response.didCancel) {
                             let data = response.assets[0];
                             if (data) {
-                                let file = {
-                                    uri: data.uri,
-                                    type: data.type,
-                                    name: data.fileName
-                                }
+                                // let file = {
+                                //     uri: data.uri,
+                                //     type: data.type,
+                                //     name: data.fileName
+                                // }
                                 setInitialValue(p => ({ ...p, photo: data.base64 }))
                                 setModal(false)
                             }
@@ -117,11 +117,11 @@ const CreateContact = ({ navigation, route }) => {
                         if (!response.didCancel) {
                             let data = response.assets[0];
                             if (data) {
-                                let file = {
-                                    uri: data.uri,
-                                    type: data.type,
-                                    name: data.fileName
-                                }
+                                // let file = {
+                                //     uri: data.uri,
+                                //     type: data.type,
+                                //     name: data.fileName
+                                // }
                                 // console.log(data.base64)
                                 // handleUpload(file);
                                 setInitialValue(p => ({ ...p, photo: data.base64 }))
