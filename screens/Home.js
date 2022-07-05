@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
     FlatList, Image, StyleSheet,
     Text, View
@@ -7,29 +7,36 @@ import { Card, FAB } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { contactEmpty } from '../assets/images';
 import { getAllContact } from '../store/contactReducer/actions';
-
+import { myContext } from '../App';
 const Home = ({ navigation }) => {
 
-    const dispatch = useDispatch()
-    const { data, loading } = useSelector(state => state.contactReducer)
+    // const dispatch = useDispatch()
+    // const { data, loading } = useSelector(state => state.contactReducer)
+
+    const { state, dispatch } = useContext(myContext)
+    const { data, loading } = state
 
     const refreshData = () => {
         dispatch(getAllContact())
     }
+
     useEffect(() => {
-        // fetchData()
-        dispatch(getAllContact())
-    }, [dispatch])
+        getAllContact(callBack)
+    }, [])
+
+    const callBack = ({ type, payload }) => {
+        dispatch({ type: type, payload: payload })
+        dispatch({ type: type, payload: payload })
+    };
 
     useEffect(() => {
         if (loading) {
-            dispatch(getAllContact())
+            getAllContact(callBack)
         }
     }, [loading])
 
 
     const renderList = ((item) => {
-        console.log(item)
         return (
             <Card style={styles.myCard} key={item.id} onPress={() => navigation.navigate("Profile", { item })}>
                 <View style={styles.cardView}>

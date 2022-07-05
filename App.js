@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { createContext, useReducer } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -17,13 +17,6 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 import Home from './screens/Home';
 import CreateContact from './screens/CreateContact';
 import Profile from './screens/Profile';
@@ -32,9 +25,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import rootReducer from './store/rootReducer'
+import { contactReducer, initialState } from './store/contactReducer/reducer'
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+// REDUX
+// const store = createStore(rootReducer, applyMiddleware(thunk))
+// TUTUP REDUX
+
+// CONTEXT
+export const myContext = createContext()
+// TUTUP CONTEXT
 
 const Stack = createStackNavigator();
 
@@ -77,12 +76,18 @@ function App() {
 
 
 export default () => {
+  const [state, dispatch] = useReducer(contactReducer, initialState);
+
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
+    <myContext.Provider value={
+      { state, dispatch }
+    }>
       <NavigationContainer>
         <App />
       </NavigationContainer>
-    </Provider>
+    </myContext.Provider>
+    // </Provider>
   );
 }
 

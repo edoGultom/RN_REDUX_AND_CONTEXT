@@ -1,12 +1,12 @@
 import * as Actions from './const';
 
-const initialState = {
+export const initialState = {
     data: [],
     message: '',
     loading: true
 }
 
-export default function contactReducer(state = initialState, action) {
+export const contactReducer = (state, action) => {
     switch (action.type) {
         case Actions.GET_ALL_CONTACT_SUCCESS:
             return {

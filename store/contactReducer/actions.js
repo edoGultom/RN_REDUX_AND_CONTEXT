@@ -2,26 +2,28 @@ import axios from 'axios';
 import { api } from '../../api';
 import { DELETE_CONTACT_SUCCESS, GET_ALL_CONTACT_ERROR, GET_ALL_CONTACT_SUCCESS, SET_CONTACT_SUCCESS, SET_CREATE_LOADING, SET_LOADING, UPDATE_CONTACT_SUCCESS } from './const';
 
-export const getAllContact = () => (dispatch) => {
+export const getAllContact = (callBack) => {
     axios.get(`${api}/contact`)
         .then(response => {
-            if (response.data) {
-                dispatch({
-                    type: GET_ALL_CONTACT_SUCCESS,
-                    payload: response.data.data,
-                });
-                dispatch({
-                    type: SET_LOADING,
-                    payload: false
-                });
+            // if (response.data) {
+            //     dispatch({
+            //         type: GET_ALL_CONTACT_SUCCESS,
+            //         payload: response.data.data,
+            //     });
+            //     dispatch({
+            //         type: SET_LOADING,
+            //         payload: false
+            //     });
 
-            } else {
-                dispatch({ type: GET_ALL_CONTACT_ERROR });
-            }
+            // } else {
+            //     dispatch({ type: GET_ALL_CONTACT_ERROR });
+            // }
+            callBack({ type: GET_ALL_CONTACT_SUCCESS, payload: response.data.data });
+            callBack({ type: SET_LOADING, payload: false });
         })
         .catch(function (error) {
             console.log(error.response)
-            dispatch({ type: GET_ALL_CONTACT_ERROR });
+            callBack({ type: GET_ALL_CONTACT_ERROR, payload: [] });
 
         });
 }
