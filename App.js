@@ -22,9 +22,9 @@ import CreateContact from './screens/CreateContact';
 import Profile from './screens/Profile';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
+// import thunk from 'redux-thunk';
+// import { createStore, applyMiddleware } from 'redux'
+// import { Provider } from 'react-redux'
 import { contactReducer, initialState } from './store/contactReducer/reducer'
 
 // REDUX
@@ -58,8 +58,8 @@ function App() {
         <Stack.Screen
           name="Create"
           component={CreateContact}
-          // options={{ ...myOptions, title: "New Contact" }}
-          options={({ route }) => ({ ...myOptions, title: route.params.name })}
+          options={{ ...myOptions, title: "Create New Contact" }}
+        // options={({ route }) => ({ ...myOptions, title: route.params.name })}
 
         />
 

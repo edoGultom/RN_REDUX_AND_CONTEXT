@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Alert, Image, StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Button, Modal, Title } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { contactEmpty } from '../assets/images';
 import { deleteContact } from '../store/contactReducer/actions';
+import { myContext } from '../App';
 
 
 const Profile = (props, { navigation }) => {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
+    // const { state, dispatch } = useContext(myContext)
+    const { state, dispatch } = useContext(myContext)
+    const { data, loading } = state
+
     const [modalHapusVisible, setModalHapusVisible] = useState(false);
 
     const { id, firstName, lastName, photo, age } = props.route.params.item;
@@ -24,7 +29,7 @@ const Profile = (props, { navigation }) => {
     }
     const handleProcessDelete = () => {
         setModalHapusVisible(false);
-        dispatch(deleteContact(id, status => callBackDelete(status)));
+        deleteContact(id, status => callBackDelete(status), dispatch);
     }
     const callBackDelete = ({ status, pesan }) => {
         if (status) {

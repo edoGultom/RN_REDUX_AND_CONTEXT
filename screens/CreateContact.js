@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Alert, Animated, KeyboardAvoidingView, Modal, PermissionsAndroid, StyleSheet, Text, View } from 'react-native';
 import * as ImagePicker from "react-native-image-picker";
 import { Avatar, Button, TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { contactEmpty } from '../assets/images';
 import { createDataContact, updateDataContact } from '../store/contactReducer/actions';
+import { myContext } from '../App';
 
 const CreateContact = ({ navigation, route }) => {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
+    const { state, dispatch } = useContext(myContext)
+    const { data, loading } = state
+
     const [modal, setModal] = useState(false);
     const [enableShift, setEnableShift] = useState(false);
     const [keteranganValidFile, setKeteranganValidFile] = useState('');
@@ -171,10 +175,10 @@ const CreateContact = ({ navigation, route }) => {
     };
 
     const submitData = () => {
-        dispatch(createDataContact(initialValue, (param) => callBack(param)))
+        createDataContact(initialValue, (param) => callBack(param), dispatch)
     }
     const updateData = () => {
-        dispatch(updateDataContact(paramsId, initialValue, (param) => callBack(param)))
+        updateDataContact(paramsId, initialValue, (param) => callBack(param), dispatch)
     }
     const callBack = ({ status, pesan }) => {
         if (status) {

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { contactEmpty } from '../assets/images';
 import { getAllContact } from '../store/contactReducer/actions';
 import { myContext } from '../App';
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
 
     // const dispatch = useDispatch()
     // const { data, loading } = useSelector(state => state.contactReducer)
@@ -17,21 +17,16 @@ const Home = ({ navigation }) => {
     const { data, loading } = state
 
     const refreshData = () => {
-        dispatch(getAllContact())
+        getAllContact(dispatch)
     }
 
     useEffect(() => {
-        getAllContact(callBack)
+        getAllContact(dispatch)
     }, [])
-
-    const callBack = ({ type, payload }) => {
-        dispatch({ type: type, payload: payload })
-        dispatch({ type: type, payload: payload })
-    };
 
     useEffect(() => {
         if (loading) {
-            getAllContact(callBack)
+            getAllContact(dispatch)
         }
     }, [loading])
 
