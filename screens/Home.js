@@ -12,7 +12,6 @@ const Home = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const { data, loading } = useSelector(state => state.contactReducer)
-
     const refreshData = () => {
         dispatch(getAllContact())
     }
