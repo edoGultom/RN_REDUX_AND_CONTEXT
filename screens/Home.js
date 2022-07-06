@@ -12,7 +12,6 @@ const Home = ({ navigation, route }) => {
 
     // const dispatch = useDispatch()
     // const { data, loading } = useSelector(state => state.contactReducer)
-
     const { state, dispatch } = useContext(myContext)
     const { data, loading } = state
 
